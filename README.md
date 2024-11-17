@@ -17,6 +17,19 @@ You can install the package via composer:
 composer require biostate/filament-menu-builder
 ```
 
+Add the plugin to your `AdminPanelServiceProvider.php`:
+
+```php
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        // Your other configurations
+        ->plugins([
+            \Biostate\FilamentMenuBuilder\FilamentMenuBuilderPlugin::make(), // Add this line
+        ]);
+}
+```
+
 You can publish and run the migrations with:
 
 ```bash
@@ -43,12 +56,36 @@ return [
 ];
 ```
 
-## Usage
+## Menuable
+
+You can create relationships between menu items and your models. To enable this feature, you need to add the `Menuable` trait to your model.
 
 ```php
-$filamentMenuBuilder = new Biostate\FilamentMenuBuilder();
-echo $filamentMenuBuilder->echoPhrase('Hello, Biostate!');
+use Biostate\FilamentMenuBuilder\Traits\Menuable;
+
+class Product extends Model
+{
+    use Menuable;
+}
 ```
+
+After this you need to add your model in to the config file. You can add multiple models.
+
+```php
+return [
+    'models' => [
+        'Product' => \App\Models\Product::class,
+    ],
+];
+```
+
+If you add these configurations, you can see the menu items in the menu item forms as a select input.
+
+## Blade Components
+
+Todo: Add blade components
+
+Todo: add parameters like mega menu, dropdown, etc.
 
 ## Testing
 

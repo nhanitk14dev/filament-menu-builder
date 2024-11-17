@@ -2,6 +2,10 @@
 
 namespace Biostate\FilamentMenuBuilder;
 
+use Biostate\FilamentMenuBuilder\Commands\FilamentMenuBuilderCommand;
+use Biostate\FilamentMenuBuilder\Http\Livewire\MenuBuilder;
+use Biostate\FilamentMenuBuilder\Http\Livewire\MenuItemForm;
+use Biostate\FilamentMenuBuilder\Testing\TestsFilamentMenuBuilder;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -10,11 +14,10 @@ use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
+use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Biostate\FilamentMenuBuilder\Commands\FilamentMenuBuilderCommand;
-use Biostate\FilamentMenuBuilder\Testing\TestsFilamentMenuBuilder;
 
 class FilamentMenuBuilderServiceProvider extends PackageServiceProvider
 {
@@ -59,6 +62,12 @@ class FilamentMenuBuilderServiceProvider extends PackageServiceProvider
     }
 
     public function packageRegistered(): void {}
+
+    public function bootingPackage(): void
+    {
+        Livewire::component('menu-builder', MenuBuilder::class);
+        Livewire::component('menu-item-form', MenuItemForm::class);
+    }
 
     public function packageBooted(): void
     {
@@ -146,7 +155,8 @@ class FilamentMenuBuilderServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_filament-menu-builder_table',
+            'create_menus_table',
+            'create_menu_items_table',
         ];
     }
 }
