@@ -2,6 +2,7 @@
 
 namespace Biostate\FilamentMenuBuilder\Models;
 
+use Biostate\FilamentMenuBuilder\Enums\MenuItemType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +18,9 @@ class MenuItem extends Model
     protected $fillable = [
         'name',
         'target',
+        'type',
+        'route',
+        'route_parameters',
         'link_class',
         'wrapper_class',
         'menu_id',
@@ -28,6 +32,7 @@ class MenuItem extends Model
 
     protected $casts = [
         'parameters' => 'collection',
+        'route_parameters' => 'collection',
     ];
 
     public $timestamps = false;
@@ -44,28 +49,21 @@ class MenuItem extends Model
         return $this->belongsTo(Menu::class);
     }
 
-    public function getTypeAttribute($value)
+    public function getNormalizedTypeAttribute($value)
     {
-        if ($this->menuable_type === null) {
-            return 'Link';
+        if ($this->type !== 'model') {
+            return MenuItemType::fromValue($this->type)->getLabel();
         }
 
         return Str::afterLast($this->menuable_type, '\\');
     }
 
-    public function getLinkAttribute($value)
+    public function getLinkAttribute($value): string
     {
-        if ($this->menuable_type === null || $this->menuable === null) {
-            return $this->url;
-        }
-
-        return $this->menuable->menu_link;
-    }
-
-    public function childrenDeep()
-    {
-        return $this->children()->with(['childrenDeep' => function ($query) {
-            $query->defaultOrder();
-        }]);
+        return match ($this->type) {
+            'model' => $this->menuable->menu_link,
+            'url' => $this->url,
+            default => route($this->route, $this->route_parameters->toArray()),
+        };
     }
 }

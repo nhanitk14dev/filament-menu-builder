@@ -2,7 +2,9 @@
 
 namespace Biostate\FilamentMenuBuilder\Filament\Resources;
 
+use Biostate\FilamentMenuBuilder\Enums\MenuItemType;
 use Biostate\FilamentMenuBuilder\Models\MenuItem;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -10,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Route;
 
 class MenuItemResource extends Resource
 {
@@ -80,8 +83,6 @@ class MenuItemResource extends Resource
                 ->autofocus()
                 ->required()
                 ->maxLength(255),
-            TextInput::make('icon')
-                ->maxLength(255),
             Select::make('target')
                 ->required()
                 ->default('_self')
@@ -93,26 +94,106 @@ class MenuItemResource extends Resource
                 ->maxLength(255),
             TextInput::make('wrapper_class')
                 ->maxLength(255),
-            Select::make('menuable_type')
-                ->options(
-                    array_flip(config('filament-menu-builder.models', []))
-                )
-                ->reactive()
-                ->afterStateUpdated(fn (callable $set) => $set('menuable_id', null))
-                ->hidden(fn () => empty(config('filament-menu-builder.models', []))),
-            Select::make('menuable_id')
-                ->searchable()
-                ->options(fn ($get) => $get('menuable_type')::all()->pluck($get('menuable_type')::getFilamentSearchLabel(), 'id'))
-                ->getSearchResultsUsing(function (string $search, callable $get) {
-                    $className = $get('menuable_type');
+            Fieldset::make('URL')
+                ->columns(1)
+                ->schema([
+                    Select::make('type')
+                        ->options(MenuItemType::class)
+                        ->afterStateUpdated(function (callable $set) {
+                            $set('menuable_type', null);
+                            $set('menuable_id', null);
+                            $set('url', null);
+                        })
+                        ->default('link')
+                        ->required()
+                        ->reactive(),
+                    // URL
+                    TextInput::make('url')
+                        ->hidden(fn ($get) => $get('type') != 'link')
+                        ->maxLength(255)
+                        ->required(fn ($get) => $get('type') == 'link'),
+                    // ROUTE
+                    Select::make('route')
+                        ->searchable()
+                        ->helperText('Choose a route to see its parameters. Named routes are only available.')
+                        ->options(
+                            function () {
+                                $excludedRoutes = config('filament-menu-builder.exclude_route_names', []);
 
-                    return $className::filamentSearch($search)->pluck($className::getFilamentSearchLabel(), 'id');
-                })
-                ->getOptionLabelUsing(fn ($value, $get): ?string => $get('menuable_type')::find($value)?->getFilamentSearchOptionName())
-                ->hidden(fn ($get) => $get('menuable_type') == null),
-            TextInput::make('url')
-                ->hidden(fn ($get) => $get('menuable_type') != null)
-                ->maxLength(255),
+                                $routes = collect(Route::getRoutes())
+                                    ->filter(function ($route) use ($excludedRoutes) {
+                                        $routeName = $route->getName();
+                                        if (! $routeName) {
+                                            return false;
+                                        }
+
+                                        // Check if the route name matches any of the excluded patterns
+                                        $isExcluded = false;
+                                        foreach ($excludedRoutes as $pattern) {
+                                            if (preg_match($pattern, $routeName)) {
+                                                $isExcluded = true;
+
+                                                break;
+                                            }
+                                        }
+
+                                        return ! $isExcluded;
+                                    })
+                                    ->mapWithKeys(function ($route) {
+                                        return [$route->getName() => $route->getName()];
+                                    });
+
+                                return $routes;
+                            }
+                        )
+                        ->hidden(fn ($get) => $get('type') != 'route')
+                        ->required(fn ($get) => $get('type') == 'route')
+                        ->reactive(),
+                    KeyValue::make('route_parameters')
+                        ->hidden(fn ($get) => $get('type') != 'route')
+                        ->helperText(function ($get, $set) {
+                            if ($get('route') === null) {
+                                return 'Choose a route to see its parameters.';
+                            }
+                            $route = app('router')->getRoutes()->getByName($get('route'));
+                            if (! $route) {
+                                return 'Route parameters not found.';
+                            }
+
+                            $uri = $route->uri();
+
+                            preg_match_all('/\{(\w+?)\}/', $uri, $matches);
+                            $parameters = $matches[1];
+
+                            if (empty($parameters)) {
+                                return 'No parameters required for this route. But you can use query parameters.';
+                            }
+
+                            $set('route_parameters', array_fill_keys($parameters, null));
+
+                            return 'Route parameters: ' . implode(', ', $parameters) . '. Also, you can use query parameters too.';
+                        }),
+                    // MODEL
+                    Select::make('menuable_type')
+                        ->options(
+                            array_flip(config('filament-menu-builder.models', []))
+                        )
+                        ->reactive()
+                        ->required(fn ($get) => $get('type') == 'model')
+                        ->afterStateUpdated(fn (callable $set) => $set('menuable_id', null))
+                        ->hidden(fn ($get) => empty(config('filament-menu-builder.models', [])) || $get('type') != 'model'),
+                    Select::make('menuable_id')
+                        ->searchable()
+                        ->options(fn ($get) => $get('menuable_type')::all()->pluck($get('menuable_type')::getFilamentSearchLabel(), 'id'))
+                        ->getSearchResultsUsing(function (string $search, callable $get) {
+                            $className = $get('menuable_type');
+
+                            return $className::filamentSearch($search)->pluck($className::getFilamentSearchLabel(), 'id');
+                        })
+                        ->required(fn ($get) => $get('menuable_type') != null)
+                        ->getOptionLabelUsing(fn ($value, $get): ?string => $get('menuable_type')::find($value)?->getFilamentSearchOptionName())
+                        ->hidden(fn ($get) => $get('menuable_type') == null),
+                ]),
             KeyValue::make('parameters')
                 ->helperText('mega_menu, mega_menu_columns'),
         ];

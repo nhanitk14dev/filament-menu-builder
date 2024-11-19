@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->nullableMorphs('menuable');
             $table->string('name');
+            $table->string('type');
             $table->string('url')->nullable();
+            $table->string('route');
+            $table->json('route_parameters')->nullable();
             $table->string('target')->default('_self');
             $table->string('link_class')->nullable();
             $table->string('wrapper_class')->nullable();

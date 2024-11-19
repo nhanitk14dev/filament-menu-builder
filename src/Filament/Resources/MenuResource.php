@@ -55,6 +55,13 @@ class MenuResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('slug')
+                    ->label('Compoanent')
+                    ->copyable()
+                    ->copyMessage('Blade Component Copied! Just paste it in your blade file.')
+                    ->copyMessageDuration(3000)
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => "<x-filament-menu-builder-menu menu=\"{$state}\" />"),
             ])
             ->filters([
                 //

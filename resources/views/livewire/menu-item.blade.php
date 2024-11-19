@@ -7,12 +7,13 @@
     <div class="flex justify-between">
     <div>
     <span>{{ $item->name }}</span>
-    <span class="text-xs text-gray-500">/  {{ $item->type }} @if($isMegamenu) / {{ $isMegamenu ? "Mega menü - ".$columns : "" }} @endif </span>
+    <span class="text-xs text-gray-500">/  {{ $item->normalized_type }} @if($isMegamenu) / {{ $isMegamenu ? "Mega menü - ".$columns : "" }} @endif </span>
     </div>
     <div class="flex gap-2">
         {{($this->createSubItemAction)(['menuItemId' => $item->id])}}
         {{($this->editAction)(['menuItemId' => $item->id])}}
         {{($this->viewAction)(['menuItemId' => $item->id])}}
+        {{($this->goToLinkAction)(['menuItemId' => $item->id])}}
         {{($this->deleteAction)(['menuItemId' => $item->id])}}
     </div>
     </div>
@@ -34,7 +35,7 @@
             },
         }"
     >
-        @foreach($item->childrenDeep as $children)
+        @foreach($item->children as $children)
             @include('filament-menu-builder::livewire.menu-item', ['item' => $children])
         @endforeach
     </div>

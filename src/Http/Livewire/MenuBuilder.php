@@ -8,6 +8,7 @@ use Biostate\FilamentMenuBuilder\Models\MenuItem;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -47,6 +48,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->modalHeading(__('filament-menu-builder::menu-builder.destroy_menu_item_heading'))
             ->modalDescription('Are you sure you want to delete this menu item? All items below will be deleted as well.')
             ->modalSubmitActionLabel(__('Destroy'))
+            ->color('danger')
             ->action(function (array $arguments) {
                 $menuItemId = $arguments['menuItemId'];
 
@@ -85,7 +87,10 @@ class MenuBuilder extends Component implements HasActions, HasForms
                     'parameters' => $menuItem->parameters->toArray(),
                 ];
             })
-            ->form(fn () => MenuItemResource::getFormSchema())
+            ->form(fn () => [
+                Grid::make()
+                    ->schema(MenuItemResource::getFormSchema()),
+            ])
             ->action(function (array $arguments, $data) {
                 $menuItemId = $arguments['menuItemId'];
 
@@ -105,7 +110,10 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->size(ActionSize::ExtraSmall)
             ->icon('heroicon-m-plus')
             ->iconButton()
-            ->form(fn () => MenuItemResource::getFormSchema())
+            ->form(fn () => [
+                Grid::make()
+                    ->schema(MenuItemResource::getFormSchema()),
+            ])
             ->action(function (array $arguments, $data) {
                 $parent = MenuItem::find($arguments['menuItemId']);
                 if (! $parent) {
@@ -127,10 +135,19 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->size(ActionSize::ExtraSmall)
             ->icon('heroicon-m-eye')
             ->iconButton()
-            ->action(function (array $arguments) {
-                $menuItemId = $arguments['menuItemId'];
-            });
+            ->url(fn (array $arguments) => MenuItemResource::getUrl('edit', ['record' => $arguments['menuItemId']]));
     }
+
+    public function goToLinkAction(): Action
+    {
+        // TODO: extend action and make new edit action for this component
+        return Action::make('goToLink')
+            ->size(ActionSize::ExtraSmall)
+            ->icon('heroicon-m-link')
+            ->iconButton()
+            ->url(fn (array $arguments) => MenuItem::find($arguments['menuItemId'])->link);
+    }
+
 
     public function render()
     {
@@ -141,12 +158,9 @@ class MenuBuilder extends Component implements HasActions, HasForms
     {
         $this->items = Menu::find($this->menuId)
             ->items()
-            ->with(['childrenDeep' => function ($query) {
-                $query->defaultOrder();
-            }])
-            ->whereIsRoot()
             ->defaultOrder()
-            ->get();
+            ->get()
+            ->toTree();
     }
 
     public function save(): void
