@@ -62,7 +62,7 @@ class MenuItem extends Model
     {
         return match ($this->type) {
             'model' => $this->menuable->menu_link,
-            'url' => $this->url,
+            'link' => $this->url,
             default => route($this->route, $this->route_parameters->toArray()),
         };
     }
