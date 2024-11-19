@@ -174,7 +174,6 @@ class MenuBuilder extends Component implements HasActions, HasForms
 
     }
 
-
     public function render()
     {
         return view('filament-menu-builder::livewire.menu-builder');
