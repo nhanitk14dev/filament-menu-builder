@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('url')->nullable();
-            $table->string('route');
+            $table->string('route')->nullable();
             $table->json('route_parameters')->nullable();
             $table->string('target')->default('_self');
             $table->string('link_class')->nullable();
