@@ -14,4 +14,4 @@ return [
     'menu_saved' => 'Menu saved',
     'empty_menu_items_hint_1' => 'There are no menu items in this menu.',
     'empty_menu_items_hint_2' => 'You can add new menu items using by left panel.',
-    ];
+];
