@@ -36,4 +36,17 @@ class MenuBuilder extends Page
     {
         return false;
     }
+
+    public function getBreadcrumbs(): array
+    {
+        $resource = static::getResource();
+
+        $breadcrumbs = [
+            $resource::getUrl() => $resource::getBreadcrumb(),
+            $resource::getUrl('edit', ['record' => $this->record]) => $this->record->name,
+            ...(filled($breadcrumb = $this->getBreadcrumb()) ? [$breadcrumb] : []),
+        ];
+
+        return $breadcrumbs;
+    }
 }
