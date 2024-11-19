@@ -21,7 +21,7 @@ class MenuResource extends Resource
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public static function getModelLabel(): string
     {
@@ -29,7 +29,7 @@ class MenuResource extends Resource
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public static function getPluralModelLabel(): string
     {

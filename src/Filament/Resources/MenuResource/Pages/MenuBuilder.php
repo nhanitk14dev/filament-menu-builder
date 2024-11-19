@@ -43,7 +43,7 @@ class MenuBuilder extends Page
 
         $breadcrumbs = [
             $resource::getUrl() => $resource::getBreadcrumb(),
-            $resource::getUrl('edit', ['record' => $this->record]) => $this->record->name,
+            $resource::getUrl('edit', ['record' => $this->record]) => $this->record->getAttribute('name'),
             ...(filled($breadcrumb = $this->getBreadcrumb()) ? [$breadcrumb] : []),
         ];
 
