@@ -148,6 +148,32 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->url(fn (array $arguments) => MenuItem::find($arguments['menuItemId'])->link);
     }
 
+    public function duplicateAction(): Action
+    {
+        // TODO: extend action and make new edit action for this component
+        return Action::make('duplicate')
+            ->size(ActionSize::ExtraSmall)
+            ->icon('heroicon-m-document-duplicate')
+            ->iconButton()
+            ->requiresConfirmation()
+            ->modalDescription('Are you sure you want to duplicate this menu item?')
+            ->action(function (array $arguments) {
+                $menuItemId = $arguments['menuItemId'];
+
+                $menuItem = MenuItem::find($menuItemId);
+                if (! $menuItem) {
+                    return;
+                }
+
+                $newMenuItem = $menuItem->replicate();
+                $newMenuItem->name = $newMenuItem->name . ' (copy)';
+                $newMenuItem->afterNode($menuItem)->save();
+
+                // TODO: add extra action and name "Duplicate and Edit"
+            });
+
+    }
+
 
     public function render()
     {

@@ -4,22 +4,23 @@
 @endphp
 
 <div class="item" data-id="{{ $item->id }}" wire:key="{{'menu-item-'.$item->id}}">
-    <div class="flex justify-between">
-    <div>
-    <span>{{ $item->name }}</span>
-    <span class="text-xs text-gray-500">/  {{ $item->normalized_type }} @if($isMegamenu) / {{ $isMegamenu ? "Mega menü - ".$columns : "" }} @endif </span>
-    </div>
-    <div class="flex gap-2">
-        {{($this->createSubItemAction)(['menuItemId' => $item->id])}}
-        {{($this->editAction)(['menuItemId' => $item->id])}}
-        {{($this->viewAction)(['menuItemId' => $item->id])}}
-        {{($this->goToLinkAction)(['menuItemId' => $item->id])}}
-        {{($this->deleteAction)(['menuItemId' => $item->id])}}
-    </div>
+    <div class="flex justify-between content-center mb-2 gap-2">
+        <div>
+            <span class="font-medium">{{ $item->name }}</span>
+            <span class="text-xs text-gray-500">/  {{ $item->normalized_type }} @if($isMegamenu) / {{ $isMegamenu ? "Mega menü - ".$columns : "" }} @endif </span>
+        </div>
+        <div class="flex gap-2">
+            {{($this->createSubItemAction)(['menuItemId' => $item->id])}}
+            {{($this->editAction)(['menuItemId' => $item->id])}}
+            {{($this->duplicateAction)(['menuItemId' => $item->id])}}
+            {{($this->viewAction)(['menuItemId' => $item->id])}}
+            {{($this->goToLinkAction)(['menuItemId' => $item->id])}}
+            {{($this->deleteAction)(['menuItemId' => $item->id])}}
+        </div>
     </div>
 
     <div
-        @class(['nested' => true, 'grid grid-cols-'.$columns.' gap-4' => $columns > 0])
+        @class(['nested ml-[15px] rounded bg-black/5 grid gap-4 grid-cols-1 p-2' => true])
         data-id="{{ $item->id }}"
         x-data="{
             init(){

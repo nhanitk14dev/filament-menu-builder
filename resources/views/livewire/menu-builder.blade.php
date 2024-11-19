@@ -21,8 +21,8 @@
     }"
     >
         @if($items->count() > 0)
-        <div class="nested-wrapper">
-            <div id="parentNested" class="nested"
+        <div class="nested-wrapper p-[15px] border-black/10 border rounded-md bg-white">
+            <div id="parentNested" class="nested grid gap-4 grid-cols-1"
                  x-data="{
                     init(){
                         new Sortable(this.$el, {
@@ -62,7 +62,7 @@
             <x-filament::loading-indicator wire:loading class="h-5 w-5" />
             {{ __('Reset') }}
         </x-filament::button>
-        <p class="text-gray-500 text-center">
+        <p class="text-gray-500 text-center mt-2 text-[13px]">
             {{ __('filament-menu-builder::menu-builder.menu_item_information') }}
         </p>
         @else
@@ -77,34 +77,5 @@
         @endif
     </form>
 
-
-
-
-
-
     <x-filament-actions::modals />
-    <style>
-        .nested > .item {
-            margin-top: 15px;
-        }
-
-        .nested > .item > .nested {
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.02);
-            margin-left: 15px;
-            border-radius: 5px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .nested-wrapper {
-            padding: 0 15px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .nested .nested {
-            padding: 8px 0;
-            margin-left: 15px;
-        }
-    </style>
-
 </div>
