@@ -16,15 +16,14 @@ class MenuItem extends Model
 
     protected $fillable = [
         'name',
-        'url',
         'target',
-        'icon',
         'link_class',
         'wrapper_class',
         'menu_id',
         'parameters',
         'menuable_id',
         'menuable_type',
+        'url',
     ];
 
     protected $casts = [

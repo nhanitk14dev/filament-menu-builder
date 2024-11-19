@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('url')->nullable();
             $table->string('target')->default('_self');
-            $table->string('icon')->nullable();
             $table->string('link_class')->nullable();
             $table->string('wrapper_class')->nullable();
             $table->json('parameters')->nullable();
