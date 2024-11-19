@@ -58,7 +58,7 @@ return [
 
 ## Menuable
 
-You can create relationships between menu items and your models. To enable this feature, you need to add the `Menuable` trait to your model.
+You can create relationships between menu items and your models. To enable this feature, you need to add the `Menuable` trait to your model and implement the `getMenuLinkAttribute` method.
 
 ```php
 use Biostate\FilamentMenuBuilder\Traits\Menuable;
@@ -66,6 +66,11 @@ use Biostate\FilamentMenuBuilder\Traits\Menuable;
 class Product extends Model
 {
     use Menuable;
+    
+    public function getMenuLinkAttribute(): string
+    {
+        return route('products.show', $this);
+    }
 }
 ```
 
@@ -80,6 +85,19 @@ return [
 ```
 
 If you add these configurations, you can see the menu items in the menu item forms as a select input.
+
+## Routes
+
+You can use your routes in the menu items. But if you want to exclude some routes, you can use the `exclude_route_names` configuration.
+We exclude the debugbar routes, filament routes, and livewire routes in default.
+
+```php
+'exclude_route_names' => [
+    '/^debugbar\./', // Exclude debugbar routes
+    '/^filament\./',   // Exclude filament routes
+    '/^livewire\./',   // Exclude livewire routes
+],
+```
 
 ## Blade Components
 
