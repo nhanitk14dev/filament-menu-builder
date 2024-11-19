@@ -25,17 +25,11 @@ class MenuItemResource extends Resource
         return __('filament-menu-builder::menu-builder.navigation_group');
     }
 
-    /**
-     * @return string
-     */
     public static function getModelLabel(): string
     {
         return __('filament-menu-builder::menu-builder.menu_item');
     }
 
-    /**
-     * @return string
-     */
     public static function getPluralModelLabel(): string
     {
         return __('filament-menu-builder::menu-builder.menu_items');
