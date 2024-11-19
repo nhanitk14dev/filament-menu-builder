@@ -148,7 +148,6 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->url(fn (array $arguments) => MenuItem::find($arguments['menuItemId'])->link);
     }
 
-
     public function render()
     {
         return view('filament-menu-builder::livewire.menu-builder');
