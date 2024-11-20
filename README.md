@@ -54,6 +54,10 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-menu-builder-views"
 ```
 
+## Caching
+
+Menu items are cached in view component by default. If you want to disable caching, you can set the `cache` configuration to `false`.
+
 ## Menuable Trait
 
 You can create relationships between menu items and your models. To enable this feature, you need to add the `Menuable` trait to your model and implement the `getMenuLinkAttribute` method.
