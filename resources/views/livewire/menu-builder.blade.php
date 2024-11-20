@@ -21,11 +21,12 @@
     }"
     >
         @if($items->count() > 0)
-        <div class="nested-wrapper p-[15px] border-black/10 border rounded-md bg-white">
-            <div id="parentNested" class="nested grid gap-4 grid-cols-1"
+        <div class="nested-wrapper">
+            <div id="parentNested" class="nested grid gap-2 grid-cols-1"
                  x-data="{
                     init(){
                         new Sortable(this.$el, {
+                            handle: '.handle',
                             group: 'nested',
                             animation: 150,
                             fallbackOnBody: true,

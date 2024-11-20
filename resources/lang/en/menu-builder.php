@@ -14,4 +14,11 @@ return [
     'menu_saved' => 'Menu saved',
     'empty_menu_items_hint_1' => 'There are no menu items in this menu.',
     'empty_menu_items_hint_2' => 'You can add new menu items using by left panel.',
+
+    'delete_menu_item_tooltip' => 'Delete',
+    'edit_menu_item_tooltip' => 'Edit',
+    'create_sub_item_tooltip' => 'Create Sub Item',
+    'view_menu_item_tooltip' => 'View',
+    'go_to_link_tooltip' => 'Go to link',
+    'duplicate_menu_item_tooltip' => 'Duplicate',
 ];
