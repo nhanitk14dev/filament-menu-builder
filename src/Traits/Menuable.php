@@ -13,7 +13,7 @@ trait Menuable
 
     public function getMenuNameAttribute(): string
     {
-        return 'name';
+        return $this->name;
     }
 
     public static function getFilamentSearchLabel(): string
