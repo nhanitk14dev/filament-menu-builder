@@ -6,7 +6,7 @@
         class="{{ $item->link_class }}"
         href="{{ $item->link }}"
     >
-        {{ $item->menu_name }}
+        {{ $item->name }}
         @if(! $item->children->isEmpty())
             <ul>
                 @foreach($item->children as $child)
