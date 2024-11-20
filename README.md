@@ -7,7 +7,12 @@
 
 
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This package offers a powerful menu builder for the Filament admin panel, enabling efficient menu creation and management.
+
+- Integrate models and routes into menu items for dynamic and flexible navigation.
+- Render menus with Blade components for consistency and adaptability.
+
+Built for simplicity and performance, this package ensures a seamless solution for managing menus in the Filament admin panel.
 
 ## Installation
 
@@ -49,14 +54,7 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-menu-builder-views"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-## Menuable
+## Menuable Trait
 
 You can create relationships between menu items and your models. To enable this feature, you need to add the `Menuable` trait to your model and implement the `getMenuLinkAttribute` method.
 
@@ -101,9 +99,17 @@ We exclude the debugbar routes, filament routes, and livewire routes in default.
 
 ## Blade Components
 
-Todo: Add blade components
+This package provides some blade components to render the menu items. You can use these components in your blade files. You can get this code in the menus table. For example:
 
-Todo: add parameters like mega menu, dropdown, etc.
+```html
+<x-filament-menu-builder::menu slug="main-menu" />
+```
+
+This blade component will render the menu items with the `main-menu` slug. You can also publish the views and customize the blade components.
+
+## TODO
+
+[ ] add parameters like mega menu, dropdown, etc.
 
 ## Testing
 
