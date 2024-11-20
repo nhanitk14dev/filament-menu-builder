@@ -33,6 +33,7 @@ class MenuItemForm extends Component implements HasForms
                     ->description('Create New Menu Item')
                     ->schema(MenuItemResource::getFormSchema()),
             ])
+            ->operation('create')
             ->statePath('data');
     }
 
