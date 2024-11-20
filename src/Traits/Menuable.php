@@ -11,6 +11,11 @@ trait Menuable
         throw new \Exception('You need to implement the menuLink method');
     }
 
+    public function getMenuNameAttribute(): string
+    {
+        return 'name';
+    }
+
     public static function getFilamentSearchLabel(): string
     {
         return 'name';

@@ -8,6 +8,7 @@ use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -94,9 +95,9 @@ class MenuItemResource extends Resource
                     Select::make('type')
                         ->options(MenuItemType::class)
                         ->afterStateUpdated(function (callable $set) {
-                            $set('menuable_type', null);
-                            $set('menuable_id', null);
-                            $set('url', null);
+                            //$set('menuable_type', null);
+                            //$set('menuable_id', null);
+                            //$set('url', null);
                         })
                         ->default('link')
                         ->required()
@@ -142,10 +143,30 @@ class MenuItemResource extends Resource
                         )
                         ->hidden(fn ($get) => $get('type') != 'route')
                         ->required(fn ($get) => $get('type') == 'route')
+                        ->afterStateUpdated(function (callable $set, callable $get, $state) {
+                            if ($state === null) {
+                                return [];
+                            }
+                            $route = app('router')->getRoutes()->getByName($state);
+                            if (! $route) {
+                                return [];
+                            }
+
+                            $uri = $route->uri();
+
+                            preg_match_all('/\{(\w+?)\}/', $uri, $matches);
+                            $parameters = $matches[1];
+
+                            if (empty($parameters)) {
+                                return [];
+                            }
+
+                            $set('route_parameters', array_fill_keys($parameters, null));
+                        })
                         ->reactive(),
                     KeyValue::make('route_parameters')
                         ->hidden(fn ($get) => $get('type') != 'route')
-                        ->helperText(function ($get, $set) {
+                        ->helperText(function ($get, $set, $operation) {
                             if ($get('route') === null) {
                                 return 'Choose a route to see its parameters.';
                             }
@@ -162,8 +183,6 @@ class MenuItemResource extends Resource
                             if (empty($parameters)) {
                                 return 'No parameters required for this route. But you can use query parameters.';
                             }
-
-                            $set('route_parameters', array_fill_keys($parameters, null));
 
                             return 'Route parameters: ' . implode(', ', $parameters) . '. Also, you can use query parameters too.';
                         }),
@@ -187,6 +206,9 @@ class MenuItemResource extends Resource
                         ->required(fn ($get) => $get('menuable_type') != null)
                         ->getOptionLabelUsing(fn ($value, $get): ?string => $get('menuable_type')::find($value)?->getFilamentSearchOptionName())
                         ->hidden(fn ($get) => $get('menuable_type') == null),
+                    Toggle::make('use_menuable_name')
+                        ->hidden(fn ($get) => $get('menuable_type') == null)
+                        ->default(false),
                 ]),
             KeyValue::make('parameters')
                 ->helperText('mega_menu, mega_menu_columns'),

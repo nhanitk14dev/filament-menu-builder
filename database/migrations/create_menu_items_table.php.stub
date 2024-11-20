@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('route')->nullable();
             $table->json('route_parameters')->nullable();
             $table->string('target')->default('_self');
+            $table->boolean('use_menuable_name')->default(false);
             $table->string('link_class')->nullable();
             $table->string('wrapper_class')->nullable();
             $table->json('parameters')->nullable();
