@@ -100,9 +100,9 @@ class MenuItemResource extends Resource
                         ->label(__('filament-menu-builder::menu-builder.form_labels.type'))
                         ->options(MenuItemType::class)
                         ->afterStateUpdated(function (callable $set) {
-                            //$set('menuable_type', null);
-                            //$set('menuable_id', null);
-                            //$set('url', null);
+                            $set('menuable_type', null);
+                            $set('menuable_id', null);
+                            $set('url', null);
                         })
                         ->default('link')
                         ->required()
