@@ -1,11 +1,9 @@
-# This is my package filament-menu-builder
+# An Elegant Menu Builder for Filament
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/biostate/filament-menu-builder.svg?style=flat-square)](https://packagist.org/packages/biostate/filament-menu-builder)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/biostate/filament-menu-builder/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/biostate/filament-menu-builder/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/biostate/filament-menu-builder/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/biostate/filament-menu-builder/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/biostate/filament-menu-builder.svg?style=flat-square)](https://packagist.org/packages/biostate/filament-menu-builder)
-
-
 
 This package offers a powerful menu builder for the Filament admin panel, enabling efficient menu creation and management.
 
@@ -61,6 +59,7 @@ Menu items are cached in view component by default. If you want to disable cachi
 ## Menuable Trait
 
 You can create relationships between menu items and your models. To enable this feature, you need to add the `Menuable` trait to your model and implement the `getMenuLinkAttribute` method.
+If you want to use the model name as the menu item name, you can use the `getMenuNameAttribute` method.
 
 ```php
 use Biostate\FilamentMenuBuilder\Traits\Menuable;
@@ -72,6 +71,12 @@ class Product extends Model
     public function getMenuLinkAttribute(): string
     {
         return route('products.show', $this);
+    }
+    
+    // Optional
+    public function getMenuNameAttribute(): string
+    {
+        return $this->name;
     }
 }
 ```
