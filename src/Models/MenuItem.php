@@ -28,11 +28,13 @@ class MenuItem extends Model
         'menuable_id',
         'menuable_type',
         'url',
+        'use_menuable_name',
     ];
 
     protected $casts = [
         'parameters' => 'collection',
         'route_parameters' => 'collection',
+        'type' => MenuItemType::class,
     ];
 
     public $timestamps = false;
@@ -49,10 +51,19 @@ class MenuItem extends Model
         return $this->belongsTo(Menu::class);
     }
 
+    public function getMenuNameAttribute($value)
+    {
+        if ($this->type->value === 'model' && $this->use_menuable_name) {
+            return $this->menuable->menu_name;
+        }
+
+        return $this->attributes['name'];
+    }
+
     public function getNormalizedTypeAttribute($value)
     {
-        if ($this->type !== 'model') {
-            return MenuItemType::fromValue($this->type)->getLabel();
+        if ($this->type->value !== 'model') {
+            return $this->type->getLabel();
         }
 
         return Str::afterLast($this->menuable_type, '\\');
@@ -60,7 +71,7 @@ class MenuItem extends Model
 
     public function getLinkAttribute($value): string
     {
-        return match ($this->type) {
+        return match ($this->type->value) {
             'model' => $this->menuable->menu_link,
             'link' => $this->url,
             default => route($this->route, $this->route_parameters->toArray()),
