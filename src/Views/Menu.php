@@ -2,8 +2,6 @@
 
 namespace Biostate\FilamentMenuBuilder\Views;
 
-use Biostate\FilamentMenuBuilder\DTO\Menu as MenuDTO;
-use Biostate\FilamentMenuBuilder\DTO\MenuItem;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 
