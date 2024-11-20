@@ -24,7 +24,7 @@ class Menu extends Component
         $lastUpdated = $this->menu->getAttribute('updated_at')?->format('Y-m-d-h:i:s');
         $slug = $this->menu->getAttribute('slug');
 
-        $this->menuItems = Cache::remember('menu-component-'.$slug.'-'.$lastUpdated, 60, function () {
+        $this->menuItems = Cache::remember('menu-component-' . $slug . '-' . $lastUpdated, 60, function () {
             return $this->menu->items()->with('menuable')->get()->toTree();
         });
     }
