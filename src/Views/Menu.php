@@ -23,14 +23,16 @@ class Menu extends Component
             return;
         }
 
-        $this->menu = MenuDTO::fromModel($menu);
+        $menuDtoClass = config('filament-menu-builder.dto.menu');
+        $this->menu = $menuDtoClass::fromModel($menu);
+        $menuItemDtoClass = config('filament-menu-builder.dto.menu_item');
 
         $lastUpdated = $menu->getAttribute('updated_at')?->format('Y-m-d-h:i:s');
         $slug = $menu->getAttribute('slug');
 
         if (! config('filament-menu-builder.cache.enabled')) {
             $menuItems = $this->fetchMenuItems($menu);
-            $this->menuItems = MenuItem::fromCollection($menuItems);
+            $this->menuItems = $menuItemDtoClass::fromCollection($menuItems);
 
             return;
         }
@@ -42,8 +44,7 @@ class Menu extends Component
         $menuItems = Cache::remember("{$cacheKey}.{$slug}.{$lastUpdated}", $cacheTtl, function () use ($menu) {
             return $this->fetchMenuItems($menu);
         });
-
-        $this->menuItems = MenuItem::fromCollection($menuItems);
+        $this->menuItems = $menuItemDtoClass::fromCollection($menuItems);
     }
 
     public function fetchMenuItems($menu)

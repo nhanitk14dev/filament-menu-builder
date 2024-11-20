@@ -17,4 +17,8 @@ return [
     'exclude_routes' => [
         //
     ],
+    'dto' => [
+        'menu' => \Biostate\FilamentMenuBuilder\DTO\Menu::class,
+        'menu_item' => \Biostate\FilamentMenuBuilder\DTO\MenuItem::class,
+    ],
 ];
