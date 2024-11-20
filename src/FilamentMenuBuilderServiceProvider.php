@@ -13,6 +13,7 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Blade;
 use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
@@ -67,6 +68,8 @@ class FilamentMenuBuilderServiceProvider extends PackageServiceProvider
     {
         Livewire::component('menu-builder', MenuBuilder::class);
         Livewire::component('menu-item-form', MenuItemForm::class);
+
+        Blade::componentNamespace('Biostate\FilamentMenuBuilder\Views', 'filament-menu-builder');
     }
 
     public function packageBooted(): void

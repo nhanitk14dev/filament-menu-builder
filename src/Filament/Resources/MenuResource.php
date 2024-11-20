@@ -55,7 +55,7 @@ class MenuResource extends Resource
                     ->copyMessage('Blade Component Copied! Just paste it in your blade file.')
                     ->copyMessageDuration(3000)
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => "<x-filament-menu-builder-menu menu=\"{$state}\" />"),
+                    ->formatStateUsing(fn (string $state): string => "<x-filament-menu-builder::menu slug=\"{$state}\" />"),
             ])
             ->filters([
                 //
