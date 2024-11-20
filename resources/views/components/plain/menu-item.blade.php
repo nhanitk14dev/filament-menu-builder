@@ -10,7 +10,7 @@
         @if(! $item->children->isEmpty())
             <ul>
                 @foreach($item->children as $child)
-                    @include('filament-menu-builder::components.menu-item', ['item' => $child])
+                    @include('filament-menu-builder::components.plain.menu-item', ['item' => $child])
                 @endforeach
             </ul>
         @endif

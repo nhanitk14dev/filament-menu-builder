@@ -111,6 +111,12 @@ This package provides some blade components to render the menu items. You can us
 
 This blade component will render the menu items with the `main-menu` slug. You can also publish the views and customize the blade components.
 
+Also you can give a custom view to the component. This package supports Bootstrap 5 by default. For example:
+
+```html
+<x-filament-menu-builder::menu slug="main-menu" view="filament-menu-builder::components.bootstrap5.menu"/>
+```
+
 ## TODO
 
 [ ] add parameters like mega menu, dropdown, etc.

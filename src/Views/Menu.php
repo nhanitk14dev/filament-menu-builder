@@ -11,7 +11,10 @@ class Menu extends Component
 
     public $menuItems;
 
-    public function __construct(string $slug)
+    public function __construct(
+        string $slug,
+        public string $view = 'filament-menu-builder::components.plain.menu',
+    )
     {
         $menu = \Biostate\FilamentMenuBuilder\Models\Menu::query()
             ->where('slug', $slug)
@@ -52,6 +55,6 @@ class Menu extends Component
 
     public function render()
     {
-        return view('filament-menu-builder::components.menu');
+        return view($this->view);
     }
 }
