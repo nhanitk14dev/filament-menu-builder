@@ -75,17 +75,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
                 $menuItemId = $arguments['menuItemId'];
                 $menuItem = MenuItem::find($menuItemId);
 
-                return [
-                    'name' => $menuItem->name,
-                    'icon' => $menuItem->icon,
-                    'target' => $menuItem->target,
-                    'link_class' => $menuItem->link_class,
-                    'wrapper_class' => $menuItem->wrapper_class,
-                    'menuable_type' => $menuItem->menuable_type,
-                    'menuable_id' => $menuItem->menuable_id,
-                    'url' => $menuItem->url,
-                    'parameters' => $menuItem->parameters->toArray(),
-                ];
+                return $menuItem->toArray();
             })
             ->form(fn () => [
                 Grid::make()
