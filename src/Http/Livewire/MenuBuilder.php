@@ -41,6 +41,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
     {
         // TODO: extend action and make new delete action for this component
         return Action::make('delete')
+            ->tooltip(__('filament-menu-builder::menu-builder.delete_menu_item_tooltip'))
             ->size(ActionSize::ExtraSmall)
             ->icon('heroicon-m-trash')
             ->iconButton()
@@ -68,6 +69,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
     {
         // TODO: extend action and make new edit action for this component
         return Action::make('edit')
+            ->tooltip(__('filament-menu-builder::menu-builder.edit_menu_item_tooltip'))
             ->size(ActionSize::ExtraSmall)
             ->icon('heroicon-m-pencil')
             ->iconButton()
@@ -97,6 +99,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
     {
         // TODO: extend action and make new edit action for this component
         return Action::make('createSubItem')
+            ->tooltip(__('filament-menu-builder::menu-builder.create_sub_item_tooltip'))
             ->size(ActionSize::ExtraSmall)
             ->icon('heroicon-m-plus')
             ->iconButton()
@@ -122,6 +125,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
     {
         // TODO: extend action and make new edit action for this component
         return Action::make('view')
+            ->tooltip(__('filament-menu-builder::menu-builder.view_menu_item_tooltip'))
             ->size(ActionSize::ExtraSmall)
             ->icon('heroicon-m-eye')
             ->iconButton()
@@ -132,6 +136,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
     {
         // TODO: extend action and make new edit action for this component
         return Action::make('goToLink')
+            ->tooltip(__('filament-menu-builder::menu-builder.go_to_link_tooltip'))
             ->size(ActionSize::ExtraSmall)
             ->icon('heroicon-m-link')
             ->iconButton()
@@ -142,6 +147,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
     {
         // TODO: extend action and make new edit action for this component
         return Action::make('duplicate')
+            ->tooltip(__('filament-menu-builder::menu-builder.duplicate_menu_item_tooltip'))
             ->size(ActionSize::ExtraSmall)
             ->icon('heroicon-m-document-duplicate')
             ->iconButton()
