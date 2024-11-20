@@ -14,7 +14,7 @@ class EditMenu extends EditRecord
     protected function getActions(): array
     {
         return [
-            Actions\Action::make('Builder')
+            Actions\Action::make(__('filament-menu-builder::menu-builder.configure_menu'))
                 ->url(fn (Menu $record): string => MenuResource::getUrl('build', ['record' => $record]))
                 ->icon('heroicon-o-bars-3'),
             Actions\DeleteAction::make(),

@@ -4,6 +4,7 @@
 return [
     'menus' => 'Menus',
     'menu' => 'Menu',
+    'menu_name' => 'Menu Name',
     'menu_items' => 'Menu Items',
     'menu_item' => 'Menu Item',
     'navigation_group' => 'Menu',
@@ -14,6 +15,11 @@ return [
     'menu_saved' => 'Menu saved',
     'empty_menu_items_hint_1' => 'There are no menu items in this menu.',
     'empty_menu_items_hint_2' => 'You can add new menu items using by left panel.',
+    'route_helper_text' => 'Choose a route to see its parameters. Named routes are only available.',
+    'route_parameters_empty_helper_text' => 'Choose a route to see its parameters.',
+    'route_parameters_not_found_helper_text' => 'Route parameters not found.',
+    'route_parameters_no_parameters_helper_text' => 'No parameters required for this route. But you can use query parameters.',
+    'route_parameters_has_parameters_helper_text' => 'Route parameters: :parameters. Also, you can use query parameters too.',
 
     'delete_menu_item_tooltip' => 'Delete',
     'edit_menu_item_tooltip' => 'Edit',
@@ -21,4 +27,26 @@ return [
     'view_menu_item_tooltip' => 'View',
     'go_to_link_tooltip' => 'Go to link',
     'duplicate_menu_item_tooltip' => 'Duplicate',
+
+    'form_labels' => [
+        'name' => 'Name',
+        'target' => 'Target',
+        'link_class' => 'Link Class',
+        'wrapper_class' => 'Wrapper Class',
+        'url' => 'URL',
+        'type' => 'Type',
+        'route' => 'Route',
+        'route_parameters' => 'Route Parameters',
+        'menuable_type' => 'Menuable Type',
+        'menuable_id' => 'Menuable ID',
+        'use_menuable_name' => 'Use Menuable Name',
+        'parameters' => 'Parameters',
+    ],
+
+    'target' => [
+        '_self' => 'Same Tab',
+        '_blank' => 'New Tab',
+    ],
+
+    'component_copy_message' => 'Blade Component Copied! Just paste it in your blade file.',
 ];

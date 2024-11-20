@@ -35,6 +35,7 @@ class MenuResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label(__('filament-menu-builder::menu-builder.form_labels.name'))
                     ->required()
                     ->autofocus()
                     ->placeholder('Name')
@@ -47,12 +48,13 @@ class MenuResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('filament-menu-builder::menu-builder.form_labels.name'))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
-                    ->label('Compoanent')
+                    ->label('Component')
                     ->copyable()
-                    ->copyMessage('Blade Component Copied! Just paste it in your blade file.')
+                    ->copyMessage(__('filament-menu-builder::menu-builder.component_copy_message'))
                     ->copyMessageDuration(3000)
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => "<x-filament-menu-builder::menu slug=\"{$state}\" />"),
@@ -61,7 +63,7 @@ class MenuResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make('Builder')
+                Tables\Actions\Action::make(__('filament-menu-builder::menu-builder.configure_menu'))
                     ->url(fn (Menu $record): string => static::getUrl('build', ['record' => $record]))
                     ->icon('heroicon-o-bars-3'),
                 Tables\Actions\EditAction::make(),

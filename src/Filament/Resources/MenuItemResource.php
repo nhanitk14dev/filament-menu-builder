@@ -2,6 +2,7 @@
 
 namespace Biostate\FilamentMenuBuilder\Filament\Resources;
 
+use Biostate\FilamentMenuBuilder\Enums\MenuItemTarget;
 use Biostate\FilamentMenuBuilder\Enums\MenuItemType;
 use Biostate\FilamentMenuBuilder\Models\MenuItem;
 use Filament\Forms\Components\Fieldset;
@@ -47,10 +48,13 @@ class MenuItemResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('filament-menu-builder::menu-builder.form_labels.name'))
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('url'),
-                Tables\Columns\TextColumn::make('menu.name'),
+                Tables\Columns\TextColumn::make('url')
+                    ->label(__('filament-menu-builder::menu-builder.form_labels.url')),
+                Tables\Columns\TextColumn::make('menu.name')
+                    ->label(__('filament-menu-builder::menu-builder.menu_name')),
             ])
             ->filters([
                 //
@@ -75,24 +79,25 @@ class MenuItemResource extends Resource
     {
         return [
             TextInput::make('name')
+                ->label(__('filament-menu-builder::menu-builder.form_labels.name'))
                 ->autofocus()
                 ->required()
                 ->maxLength(255),
             Select::make('target')
-                ->required()
+                ->options(MenuItemTarget::class)
                 ->default('_self')
-                ->options([
-                    '_self' => 'Same window',
-                    '_blank' => 'New window',
-                ]),
+                ->required(),
             TextInput::make('link_class')
+                ->label(__('filament-menu-builder::menu-builder.form_labels.link_class'))
                 ->maxLength(255),
             TextInput::make('wrapper_class')
+                ->label(__('filament-menu-builder::menu-builder.form_labels.wrapper_class'))
                 ->maxLength(255),
             Fieldset::make('URL')
                 ->columns(1)
                 ->schema([
                     Select::make('type')
+                        ->label(__('filament-menu-builder::menu-builder.form_labels.type'))
                         ->options(MenuItemType::class)
                         ->afterStateUpdated(function (callable $set) {
                             //$set('menuable_type', null);
@@ -104,13 +109,15 @@ class MenuItemResource extends Resource
                         ->reactive(),
                     // URL
                     TextInput::make('url')
+                        ->label(__('filament-menu-builder::menu-builder.form_labels.url'))
                         ->hidden(fn ($get) => $get('type') != 'link')
                         ->maxLength(255)
                         ->required(fn ($get) => $get('type') == 'link'),
                     // ROUTE
                     Select::make('route')
+                        ->label(__('filament-menu-builder::menu-builder.form_labels.route'))
                         ->searchable()
-                        ->helperText('Choose a route to see its parameters. Named routes are only available.')
+                        ->helperText(__('filament-menu-builder::menu-builder.route_helper_text'))
                         ->options(
                             function () {
                                 $excludedRoutes = config('filament-menu-builder.exclude_route_names', []);
@@ -165,14 +172,15 @@ class MenuItemResource extends Resource
                         })
                         ->reactive(),
                     KeyValue::make('route_parameters')
+                        ->label(__('filament-menu-builder::menu-builder.form_labels.route_parameters'))
                         ->hidden(fn ($get) => $get('type') != 'route')
                         ->helperText(function ($get, $set, $operation) {
                             if ($get('route') === null) {
-                                return 'Choose a route to see its parameters.';
+                                return __('filament-menu-builder::menu-builder.route_parameters_empty_helper_text');
                             }
                             $route = app('router')->getRoutes()->getByName($get('route'));
                             if (! $route) {
-                                return 'Route parameters not found.';
+                                return __('filament-menu-builder::menu-builder.route_parameters_not_found_helper_text');
                             }
 
                             $uri = $route->uri();
@@ -181,13 +189,16 @@ class MenuItemResource extends Resource
                             $parameters = $matches[1];
 
                             if (empty($parameters)) {
-                                return 'No parameters required for this route. But you can use query parameters.';
+                                return __('filament-menu-builder::menu-builder.route_parameters_no_parameters_helper_text');
                             }
 
-                            return 'Route parameters: ' . implode(', ', $parameters) . '. Also, you can use query parameters too.';
+                            return __('filament-menu-builder::menu-builder.route_parameters_has_parameters_helper_text', [
+                                'parameters' => implode(', ', $parameters),
+                            ]);
                         }),
                     // MODEL
                     Select::make('menuable_type')
+                        ->label(__('filament-menu-builder::menu-builder.form_labels.menuable_type'))
                         ->options(
                             array_flip(config('filament-menu-builder.models', []))
                         )
@@ -196,6 +207,7 @@ class MenuItemResource extends Resource
                         ->afterStateUpdated(fn (callable $set) => $set('menuable_id', null))
                         ->hidden(fn ($get) => empty(config('filament-menu-builder.models', [])) || $get('type') != 'model'),
                     Select::make('menuable_id')
+                        ->label(__('filament-menu-builder::menu-builder.form_labels.menuable_id'))
                         ->searchable()
                         ->options(fn ($get) => $get('menuable_type')::all()->pluck($get('menuable_type')::getFilamentSearchLabel(), 'id'))
                         ->getSearchResultsUsing(function (string $search, callable $get) {
@@ -207,10 +219,12 @@ class MenuItemResource extends Resource
                         ->getOptionLabelUsing(fn ($value, $get): ?string => $get('menuable_type')::find($value)?->getFilamentSearchOptionName())
                         ->hidden(fn ($get) => $get('menuable_type') == null),
                     Toggle::make('use_menuable_name')
+                        ->label(__('filament-menu-builder::menu-builder.form_labels.use_menuable_name'))
                         ->hidden(fn ($get) => $get('menuable_type') == null)
                         ->default(false),
                 ]),
             KeyValue::make('parameters')
+                ->label(__('filament-menu-builder::menu-builder.form_labels.parameters'))
                 ->helperText('mega_menu, mega_menu_columns'),
         ];
     }
