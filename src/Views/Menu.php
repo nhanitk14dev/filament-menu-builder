@@ -2,6 +2,8 @@
 
 namespace Biostate\FilamentMenuBuilder\Views;
 
+use Biostate\FilamentMenuBuilder\DTO\Menu as MenuDTO;
+use Biostate\FilamentMenuBuilder\DTO\MenuItem;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 
@@ -13,20 +15,40 @@ class Menu extends Component
 
     public function __construct(string $slug)
     {
-        $this->menu = \Biostate\FilamentMenuBuilder\Models\Menu::query()
+        $menu = \Biostate\FilamentMenuBuilder\Models\Menu::query()
             ->where('slug', $slug)
             ->first();
 
-        if (! $this->menu) {
+        if (! $menu) {
             return;
         }
 
-        $lastUpdated = $this->menu->getAttribute('updated_at')?->format('Y-m-d-h:i:s');
-        $slug = $this->menu->getAttribute('slug');
+        $this->menu = MenuDTO::fromModel($menu);
 
-        $this->menuItems = Cache::remember('menu-component-' . $slug . '-' . $lastUpdated, 60, function () {
-            return $this->menu->items()->with('menuable')->get()->toTree();
+        $lastUpdated = $menu->getAttribute('updated_at')?->format('Y-m-d-h:i:s');
+        $slug = $menu->getAttribute('slug');
+
+        if (! config('filament-menu-builder.cache.enabled')) {
+            $menuItems = $this->fetchMenuItems($menu);
+            $this->menuItems = MenuItem::fromCollection($menuItems);
+
+            return;
+        }
+
+        $cacheKey = config('filament-menu-builder.cache.key');
+        $cacheTtl = config('filament-menu-builder.cache.ttl');
+
+        // TODO: change this to flexible cache
+        $menuItems = Cache::remember("{$cacheKey}.{$slug}.{$lastUpdated}", $cacheTtl, function () use ($menu) {
+            return $this->fetchMenuItems($menu);
         });
+
+        $this->menuItems = MenuItem::fromCollection($menuItems);
+    }
+
+    public function fetchMenuItems($menu)
+    {
+        return $menu->items()->with('menuable')->get()->toTree();
     }
 
     public function render()
