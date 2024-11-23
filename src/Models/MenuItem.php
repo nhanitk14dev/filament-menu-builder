@@ -73,8 +73,21 @@ class MenuItem extends Model
     {
         return match ($this->type->value) {
             'model' => $this->menuable->menu_link,
-            'link' => $this->url,
+            'link' => $this->resolveUrl(),
             default => route($this->route, $this->route_parameters->toArray()),
         };
+    }
+
+    public function resolveUrl(): string
+    {
+        if (! $this->url) {
+            return url('/');
+        }
+
+        if ($this->url === '#') {
+            return '#';
+        }
+
+        return Str::startsWith($this->url, 'http') ? $this->url : url($this->url);
     }
 }
