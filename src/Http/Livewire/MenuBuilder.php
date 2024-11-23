@@ -162,7 +162,6 @@ class MenuBuilder extends Component implements HasActions, HasForms
                 $newMenuItem->name = $newMenuItem->name . ' (copy)';
                 $newMenuItem->afterNode($menuItem)->save();
 
-
                 if ($isEdit) {
                     $this->replaceMountedAction('edit', [
                         'menuItemId' => $newMenuItem->id,
