@@ -5,6 +5,8 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/biostate/filament-menu-builder/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/biostate/filament-menu-builder/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/biostate/filament-menu-builder.svg?style=flat-square)](https://packagist.org/packages/biostate/filament-menu-builder)
 
+> **Note:** I develop this package as a hobby project but now I want to share it with you. I will continue to develop this package. If you have any suggestions, please create an issue.
+
 This package offers a powerful menu builder for the Filament admin panel, enabling efficient menu creation and management.
 
 - Integrate models and routes into menu items for dynamic and flexible navigation.
@@ -73,7 +75,6 @@ class Product extends Model
         return route('products.show', $this);
     }
     
-    // Optional
     public function getMenuNameAttribute(): string
     {
         return $this->name;
@@ -81,7 +82,7 @@ class Product extends Model
 }
 ```
 
-After this you need to add your model in to the config file. You can add multiple models.
+After this you need to add your model in to the config file. You can add multiple models. eg:
 
 ```php
 return [
@@ -96,7 +97,7 @@ If you add these configurations, you can see the menu items in the menu item for
 ## Routes
 
 You can use your routes in the menu items. But if you want to exclude some routes, you can use the `exclude_route_names` configuration.
-We exclude the debugbar routes, filament routes, and livewire routes in default.
+Package excludes the debugbar routes, filament routes, and livewire routes in default.
 
 ```php
 'exclude_route_names' => [
