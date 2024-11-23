@@ -155,6 +155,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->modalDescription('Are you sure you want to duplicate this menu item?')
             ->action(function (array $arguments) {
                 $menuItemId = $arguments['menuItemId'];
+                $isEdit = isset($arguments['edit']);
 
                 $menuItem = MenuItem::find($menuItemId);
                 if (! $menuItem) {
@@ -165,8 +166,17 @@ class MenuBuilder extends Component implements HasActions, HasForms
                 $newMenuItem->name = $newMenuItem->name . ' (copy)';
                 $newMenuItem->afterNode($menuItem)->save();
 
-                // TODO: add extra action and name "Duplicate and Edit"
-            });
+
+                if ($isEdit) {
+                    $this->replaceMountedAction('edit', [
+                        'menuItemId' => $newMenuItem->id,
+                    ]);
+                }
+            })
+            ->extraModalFooterActions(fn (Action $action): array => [
+                $action->makeModalSubmitAction('duplicateAndEdit', arguments: ['edit' => true])
+                    ->label('Duplicate & Edit'),
+            ]);
 
     }
 
