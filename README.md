@@ -124,7 +124,10 @@ Also you can give a custom view to the component. This package supports Bootstra
 
 ## TODO
 
-[ ] add parameters like mega menu, dropdown, etc.
+- [ ] add parameters like mega menu, dropdown, etc.
+- [ ] add tests
+- [ ] add tailwind blade component
+- [ ] add "Do you want to discard the changes?" if you have unsaved changes
 
 ## Testing
 
