@@ -128,6 +128,7 @@ Also you can give a custom view to the component. This package supports Bootstra
 - [ ] add tests
 - [ ] add tailwind blade component
 - [ ] add "Do you want to discard the changes?" if you have unsaved changes
+- [ ] add more actions like: move up, move down, move one level up, move one level down, etc.
 
 ## Testing
 
