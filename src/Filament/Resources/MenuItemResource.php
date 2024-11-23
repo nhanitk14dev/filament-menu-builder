@@ -225,7 +225,9 @@ class MenuItemResource extends Resource
                 ]),
             KeyValue::make('parameters')
                 ->label(__('filament-menu-builder::menu-builder.form_labels.parameters'))
-                ->helperText('mega_menu, mega_menu_columns'),
+                ->helperText(__('filament-menu-builder::menu-builder.parameters_helper_text', [
+                    'parameters' => implode(', ', config('filament-menu-builder.usable_parameters', [])),
+                ])),
         ];
     }
 
