@@ -125,10 +125,8 @@ class MenuBuilder extends Component implements HasActions, HasForms
     {
         // TODO: extend action and make new edit action for this component
         return Action::make('view')
-            ->tooltip(__('filament-menu-builder::menu-builder.view_menu_item_tooltip'))
-            ->size(ActionSize::ExtraSmall)
+            ->label(__('filament-menu-builder::menu-builder.view_menu_item_tooltip'))
             ->icon('heroicon-m-eye')
-            ->iconButton()
             ->url(fn (array $arguments) => MenuItemResource::getUrl('edit', ['record' => $arguments['menuItemId']]));
     }
 
@@ -136,10 +134,8 @@ class MenuBuilder extends Component implements HasActions, HasForms
     {
         // TODO: extend action and make new edit action for this component
         return Action::make('goToLink')
-            ->tooltip(__('filament-menu-builder::menu-builder.go_to_link_tooltip'))
-            ->size(ActionSize::ExtraSmall)
+            ->label(__('filament-menu-builder::menu-builder.go_to_link_tooltip'))
             ->icon('heroicon-m-link')
-            ->iconButton()
             ->url(fn (array $arguments) => MenuItem::find($arguments['menuItemId'])->link);
     }
 
