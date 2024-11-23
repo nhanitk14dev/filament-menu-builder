@@ -1,13 +1,12 @@
 <x-filament-panels::page>
-    <div style="
-        display: grid;
-        grid-template-columns: 4fr 8fr;
-        grid-gap: 1rem;
-    ">
-        <div>
+    <div
+        x-data="{}"
+        x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('filament-menu-builder', 'biostate/filament-menu-builder'))]"
+    class="grid grid-cols-12 gap-4">
+        <div class="col-span-4">
             @livewire('menu-item-form', ['menuId' => $this->record->id])
         </div>
-        <div>
+        <div class="col-span-8">
             @livewire('menu-builder', ['menuId' => $this->record->id])
         </div>
     </div>

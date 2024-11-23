@@ -4,14 +4,18 @@
 @endphp
 
 <div class="item" data-id="{{ $item->id }}" wire:key="{{'menu-item-'.$item->id}}">
-    <div class="flex justify-between content-center mb-2 rounded bg-white border border-grey-500 shadow-sm pr-2">
+    <div @class([
+        'flex justify-between mb-2 content-center rounded bg-white border border-gray-300 shadow-sm pr-2 dark:bg-gray-900 dark:border-gray-800' => true
+])>
         <div class="flex content-center items-center">
-            <div class="border-r-2 border-grey-500 cursor-pointer bg-grey-400">
+            <div class="border-r-2 border-gray-300 dark:border-gray-800 cursor-pointer bg-grey-400">
                 <x-heroicon-o-arrows-up-down class="w-6 h-6 m-2 handle" />
             </div>
-            <div class="ml-2">
+            <div class="ml-2 flex">
                 <span class="font-medium">{{ $item->name }}</span>
-                <span class="text-xs text-gray-500">/  {{ $item->normalized_type }} @if($isMegamenu) / {{ $isMegamenu ? "Mega menü - ".$columns : "" }} @endif </span>
+                <x-filament::badge size="xs" class="ml-2 px-2" color="gray">
+                    {{ $item->normalized_type }} @if($isMegamenu) / {{ $isMegamenu ? "Mega menü - ".$columns : "" }} @endif
+                </x-filament::badge>
             </div>
         </div>
         <div class="flex gap-2 items-center [&_svg]:shrink-0">
@@ -21,11 +25,15 @@
             {{($this->viewAction)(['menuItemId' => $item->id])}}
             {{($this->goToLinkAction)(['menuItemId' => $item->id])}}
             {{($this->deleteAction)(['menuItemId' => $item->id])}}
+            <x-filament-actions::group class="hidden" :actions="[
+                ($this->viewAction)(['menuItemId' => $item->id]),
+                ($this->goToLinkAction)(['menuItemId' => $item->id]),
+            ]" />
         </div>
     </div>
 
     <div
-        @class(['nested ml-[15px] grid gap-1 grid-cols-1' => true])
+        @class(['nested ml-6' => true])
         data-id="{{ $item->id }}"
         x-data="{
             init(){

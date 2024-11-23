@@ -113,7 +113,7 @@ class FilamentMenuBuilderServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('filament-menu-builder', __DIR__ . '/../resources/dist/components/filament-menu-builder.js'),
-            Css::make('filament-menu-builder-styles', __DIR__ . '/../resources/dist/filament-menu-builder.css'),
+            Css::make('filament-menu-builder', __DIR__ . '/../resources/dist/filament-menu-builder.css')->loadedOnRequest(),
             Js::make('filament-menu-builder-scripts', __DIR__ . '/../resources/dist/filament-menu-builder.js'),
         ];
     }
@@ -141,6 +141,7 @@ class FilamentMenuBuilderServiceProvider extends PackageServiceProvider
      */
     protected function getRoutes(): array
     {
+        // TODO: if api enabled
         return [];
     }
 

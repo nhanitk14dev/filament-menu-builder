@@ -22,7 +22,7 @@
     >
         @if($items->count() > 0)
         <div class="nested-wrapper">
-            <div id="parentNested" class="nested grid gap-2 grid-cols-1"
+            <div id="parentNested" class="nested"
                  x-data="{
                     init(){
                         new Sortable(this.$el, {

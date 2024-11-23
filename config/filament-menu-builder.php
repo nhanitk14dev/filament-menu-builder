@@ -4,6 +4,7 @@ return [
     'models' => [
         // 'Product' => 'App\\Models\\Product',
     ],
+    'api_enabled' => true,
     'cache' => [
         'enabled' => true,
         'key' => 'filament-menu-builder',
