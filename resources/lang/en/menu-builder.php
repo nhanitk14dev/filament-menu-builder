@@ -20,6 +20,7 @@ return [
     'route_parameters_not_found_helper_text' => 'Route parameters not found.',
     'route_parameters_no_parameters_helper_text' => 'No parameters required for this route. But you can use query parameters.',
     'route_parameters_has_parameters_helper_text' => 'Route parameters: :parameters. Also, you can use query parameters too.',
+    'parameters_helper_text' => 'You can use: :parameters ',
 
     'delete_menu_item_tooltip' => 'Delete',
     'edit_menu_item_tooltip' => 'Edit',
