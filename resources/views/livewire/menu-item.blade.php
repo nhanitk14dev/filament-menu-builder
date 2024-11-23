@@ -1,8 +1,3 @@
-@php
-    $isMegamenu = $item->parameters && $item->parameters->has('mega_menu') && $item->parameters->get('mega_menu') == true;
-    $columns = $item->parameters && $item->parameters->has('mega_menu_columns') ? $item->parameters->get('mega_menu_columns') : 1;
-@endphp
-
 <div class="item" data-id="{{ $item->id }}" wire:key="{{'menu-item-'.$item->id}}">
     <div @class([
         'flex justify-between mb-2 content-center rounded bg-white border border-gray-300 shadow-sm pr-2 dark:bg-gray-900 dark:border-gray-800' => true
@@ -14,7 +9,7 @@
             <div class="ml-2 flex">
                 <span class="font-medium">{{ $item->name }}</span>
                 <x-filament::badge size="xs" class="ml-2 px-2" color="gray">
-                    {{ $item->normalized_type }} @if($isMegamenu) / {{ $isMegamenu ? "Mega menü - ".$columns : "" }} @endif
+                    {{ $item->normalized_type }}
                 </x-filament::badge>
             </div>
         </div>
@@ -22,8 +17,6 @@
             {{($this->createSubItemAction)(['menuItemId' => $item->id])}}
             {{($this->editAction)(['menuItemId' => $item->id])}}
             {{($this->duplicateAction)(['menuItemId' => $item->id])}}
-            {{($this->viewAction)(['menuItemId' => $item->id])}}
-            {{($this->goToLinkAction)(['menuItemId' => $item->id])}}
             {{($this->deleteAction)(['menuItemId' => $item->id])}}
             <x-filament-actions::group class="hidden" :actions="[
                 ($this->viewAction)(['menuItemId' => $item->id]),
