@@ -14,6 +14,17 @@ This package offers a powerful menu builder for the Filament admin panel, enabli
 
 Built for simplicity and performance, this package ensures a seamless solution for managing menus in the Filament admin panel.
 
+![Dark Theme](https://github.com/Biostate/filament-menu-builder/blob/main/art/configuration-dark.jpg?raw=true)
+![Light Theme](https://github.com/Biostate/filament-menu-builder/blob/main/art/configuration-light.jpg?raw=true)
+
+Table of Contents:
+- [Installation](#installation)
+- [Caching](#caching)
+- [Menuable Trait](#menuable-trait)
+- [Routes](#routes)
+- [Blade Components](#blade-components)
+- [TODO](#todo)
+
 ## Installation
 
 You can install the package via composer:
