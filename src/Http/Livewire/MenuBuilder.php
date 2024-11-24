@@ -62,6 +62,8 @@ class MenuBuilder extends Component implements HasActions, HasForms
                 });
 
                 $menuItem->delete();
+
+                $this->fillItems();
             });
     }
 
@@ -135,8 +137,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
         // TODO: extend action and make new edit action for this component
         return Action::make('goToLink')
             ->label(__('filament-menu-builder::menu-builder.go_to_link_tooltip'))
-            ->icon('heroicon-m-link')
-            ->url(fn (array $arguments) => MenuItem::find($arguments['menuItemId'])->link);
+            ->icon('heroicon-m-link');
     }
 
     public function duplicateAction(): Action
@@ -182,8 +183,8 @@ class MenuBuilder extends Component implements HasActions, HasForms
 
     public function fillItems(): void
     {
-        $this->items = Menu::find($this->menuId)
-            ->items()
+        $this->items = MenuItem::where('menu_id', $this->menuId)
+            ->with('menuable')
             ->defaultOrder()
             ->get()
             ->toTree();

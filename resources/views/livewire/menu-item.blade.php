@@ -20,7 +20,7 @@
             {{($this->deleteAction)(['menuItemId' => $item->id])}}
             <x-filament-actions::group class="hidden" :actions="[
                 ($this->viewAction)(['menuItemId' => $item->id]),
-                ($this->goToLinkAction)(['menuItemId' => $item->id]),
+                ($this->goToLinkAction)([])->url($item->link),
             ]" />
         </div>
     </div>
