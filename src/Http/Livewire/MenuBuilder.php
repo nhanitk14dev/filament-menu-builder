@@ -3,7 +3,6 @@
 namespace Biostate\FilamentMenuBuilder\Http\Livewire;
 
 use Biostate\FilamentMenuBuilder\Filament\Resources\MenuItemResource;
-use Biostate\FilamentMenuBuilder\Models\Menu;
 use Biostate\FilamentMenuBuilder\Models\MenuItem;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
