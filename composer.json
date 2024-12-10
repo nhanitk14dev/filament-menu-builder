@@ -1,6 +1,6 @@
 {
     "name": "biostate/filament-menu-builder",
-    "description": "This is my package filament-menu-builder",
+    "description": "An Elegant Menu Builder for FilamentPHP",
     "keywords": [
         "Biostate",
         "laravel",
