@@ -22,18 +22,16 @@ class MenuBuilder extends Component implements HasActions, HasForms
 
     public int $menuId;
 
-    private Collection $items;
 
     public array $data = [];
 
     protected $listeners = [
-        'menu-item-created' => 'fillItems',
+        'menu-item-created' => '$refresh',
     ];
 
     public function mount(int $menuId): void
     {
         $this->menuId = $menuId;
-        $this->fillItems();
     }
 
     public function deleteAction(): Action
@@ -61,8 +59,6 @@ class MenuBuilder extends Component implements HasActions, HasForms
                 });
 
                 $menuItem->delete();
-
-                $this->fillItems();
             });
     }
 
@@ -178,13 +174,13 @@ class MenuBuilder extends Component implements HasActions, HasForms
     public function render()
     {
         return view('filament-menu-builder::livewire.menu-builder', [
-            'items' => $this->items,
+            'items' => $this->items(),
         ]);
     }
 
-    public function fillItems(): void
+    public function items(): Collection
     {
-        $this->items = MenuItem::where('menu_id', $this->menuId)
+        return MenuItem::where('menu_id', $this->menuId)
             ->with('menuable')
             ->defaultOrder()
             ->get()
@@ -203,7 +199,5 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->title(__('filament-menu-builder::menu-builder.menu_saved'))
             ->success()
             ->send();
-
-        $this->fillItems();
     }
 }
