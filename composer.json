@@ -4,7 +4,9 @@
     "keywords": [
         "Biostate",
         "laravel",
-        "filament-menu-builder"
+        "filament-menu-builder",
+        "filamentphp",
+        "menu-builder"
     ],
     "homepage": "https://github.com/biostate/filament-menu-builder",
     "support": {
