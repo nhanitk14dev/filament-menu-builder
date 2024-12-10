@@ -159,7 +159,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
                 }
 
                 $newMenuItem = $menuItem->replicate();
-                $newMenuItem->name = $newMenuItem->name.' (copy)';
+                $newMenuItem->name = $newMenuItem->name . ' (copy)';
                 $newMenuItem->afterNode($menuItem)->save();
 
                 if ($isEdit) {
