@@ -22,7 +22,6 @@ class MenuBuilder extends Component implements HasActions, HasForms
 
     public int $menuId;
 
-
     public array $data = [];
 
     protected $listeners = [
