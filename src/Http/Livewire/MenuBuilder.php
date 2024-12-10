@@ -22,7 +22,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
 
     public int $menuId;
 
-    public Collection $items;
+    private Collection $items;
 
     public array $data = [];
 
@@ -159,7 +159,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
                 }
 
                 $newMenuItem = $menuItem->replicate();
-                $newMenuItem->name = $newMenuItem->name . ' (copy)';
+                $newMenuItem->name = $newMenuItem->name.' (copy)';
                 $newMenuItem->afterNode($menuItem)->save();
 
                 if ($isEdit) {
@@ -177,7 +177,9 @@ class MenuBuilder extends Component implements HasActions, HasForms
 
     public function render()
     {
-        return view('filament-menu-builder::livewire.menu-builder');
+        return view('filament-menu-builder::livewire.menu-builder', [
+            'items' => $this->items,
+        ]);
     }
 
     public function fillItems(): void
