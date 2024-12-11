@@ -72,7 +72,7 @@ class MenuItem extends Model
     public function getLinkAttribute($value): string
     {
         return match ($this->type->value) {
-            'model' => $this->menuable?->menu_link,
+            'model' => $this->menuable?->menu_link ?? '#',
             'link' => $this->resolveUrl(),
             default => route($this->route, $this->route_parameters->toArray()),
         };
