@@ -20,9 +20,9 @@ enum MenuItemType: string
     public static function fromValue(string $value): self
     {
         return match ($value) {
-            'link' => self::Link,
             'route' => self::Route,
             'model' => self::Model,
+            default => self::Link,
         };
     }
 }
