@@ -21,21 +21,23 @@ trait Menuable
         return 'name';
     }
 
-    public function scopeFilamentSearch(Builder $query, $search)
+    public function scopeFilamentSearch(Builder $query, $search, $locale = null)
     {
-        $hasTranslations = in_array('Spatie\Translatable\HasTranslations::class', class_uses_recursive(static::class));
+        $hasTranslations = in_array('Spatie\Translatable\HasTranslations', class_uses_recursive(static::class));
 
         if ($hasTranslations) {
-            $query->whereRaw("LOWER(json_unquote(JSON_EXTRACT(?, '$.tr'))) like LOWER(?)", [
-                $this->getFilamentSearchLabel(),
-                "%{$search}%",
-            ]);
+            $locale = $locale ?? app()->getLocale();
+            $query->whereRaw(
+                "LOWER(json_unquote(JSON_EXTRACT(`" . $this->getFilamentSearchLabel() . "`, '$.\"$locale\"'))) like LOWER(?)",
+                ["%{$search}%"]
+            );
         } else {
             $query->where($this->getFilamentSearchLabel(), 'like', "%{$search}%");
         }
 
         $query->limit(10);
     }
+
 
     public function getFilamentSearchOptionName()
     {
