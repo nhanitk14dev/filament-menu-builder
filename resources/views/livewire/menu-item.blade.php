@@ -7,7 +7,7 @@
                 <x-heroicon-o-arrows-up-down class="w-6 h-6 m-2 handle" />
             </div>
             <div class="ml-2 flex">
-                <span class="font-medium">{{ $item->name }}</span>
+                <span class="font-medium">{{ $item->menu_name }}</span>
                 <x-filament::badge size="xs" class="ml-2 px-2" color="gray">
                     {{ $item->normalized_type }}
                 </x-filament::badge>
