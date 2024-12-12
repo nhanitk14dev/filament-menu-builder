@@ -51,16 +51,17 @@ class MenuItem extends Model
         return $this->belongsTo(Menu::class);
     }
 
-    public function getMenuNameAttribute($value)
+    public function getMenuNameAttribute($value): string
     {
+        $name = $this->attributes['name'];
         if ($this->type->value === 'model' && $this->use_menuable_name) {
-            return $this->menuable->menu_name;
+            $name = $this->menuable?->menu_name;
         }
 
-        return $this->attributes['name'];
+        return $name ?? $this->attributes['name'];
     }
 
-    public function getNormalizedTypeAttribute($value)
+    public function getNormalizedTypeAttribute($value): string
     {
         if ($this->type->value !== 'model') {
             return $this->type->getLabel();
