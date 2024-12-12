@@ -7,9 +7,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Kalnoy\Nestedset\NodeTrait;
 
+/**
+ * @property MenuItemType $type
+ * @property string $name
+ * @property string|null $link_class
+ * @property string|null $wrapper_class
+ * @property string $target
+ * @property string|null $route
+ * @property string|null $url
+ * @property string|null $menuable_type
+ * @property string|int|null $menuable_id
+ * @property Collection $parameters
+ * @property Collection $route_parameters
+ * @property bool $use_menuable_name
+ * @property-read string $menu_name
+ * @property-read string $normalized_type
+ * @property-read string $link
+ */
 class MenuItem extends Model
 {
     use HasFactory;
@@ -54,7 +72,7 @@ class MenuItem extends Model
     public function getMenuNameAttribute($value): string
     {
         $name = $this->attributes['name'];
-        if ($this->type->value === 'model' && $this->use_menuable_name) {
+        if ($this->type === MenuItemType::Model && $this->use_menuable_name) {
             $name = $this->menuable?->menu_name;
         }
 
@@ -63,7 +81,7 @@ class MenuItem extends Model
 
     public function getNormalizedTypeAttribute($value): string
     {
-        if ($this->type->value !== 'model') {
+        if ($this->type !== MenuItemType::Model) {
             return $this->type->getLabel();
         }
 
@@ -72,9 +90,9 @@ class MenuItem extends Model
 
     public function getLinkAttribute($value): string
     {
-        return match ($this->type->value) {
-            'model' => $this->menuable?->menu_link ?? '#',
-            'link' => $this->resolveUrl(),
+        return match ($this->type) {
+            MenuItemType::Model => $this->menuable?->menu_link ?? '#',
+            MenuItemType::Link => $this->resolveUrl(),
             default => route($this->route, $this->route_parameters->toArray()),
         };
     }
