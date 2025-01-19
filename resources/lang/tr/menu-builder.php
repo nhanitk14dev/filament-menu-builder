@@ -28,6 +28,8 @@ return [
     'go_to_link_tooltip' => 'Bağlantıya git',
     'duplicate_menu_item_tooltip' => 'Kopyala',
 
+    'create_menu_item' => 'Menü Öğesi Oluştur',
+
     'form_labels' => [
         'name' => 'Ad',
         'target' => 'Hedef',

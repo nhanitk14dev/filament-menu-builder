@@ -44,6 +44,8 @@ return [
         'parameters' => 'Parameters',
     ],
 
+    'create_menu_item' => 'Create Menu Item',
+
     'target' => [
         '_self' => 'Same Tab',
         '_blank' => 'New Tab',

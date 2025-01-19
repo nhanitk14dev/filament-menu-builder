@@ -5,6 +5,7 @@ namespace Biostate\FilamentMenuBuilder\Http\Livewire;
 use Biostate\FilamentMenuBuilder\Filament\Resources\MenuItemResource;
 use Biostate\FilamentMenuBuilder\Models\MenuItem;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
@@ -31,7 +32,12 @@ class MenuItemForm extends Component implements HasForms
             ->schema([
                 Forms\Components\Section::make('Menu Item')
                     ->description('Create New Menu Item')
-                    ->schema(MenuItemResource::getFormSchema()),
+                    ->schema(MenuItemResource::getFormSchema())
+                    ->footerActions([
+                        Action::make('submit')
+                            ->label(__('filament-menu-builder::menu-builder.create_menu_item'))
+                            ->submit('submit'),
+                    ]),
             ])
             ->operation('create')
             ->statePath('data');
