@@ -49,7 +49,12 @@ class Menu extends Component
 
     public function fetchMenuItems($menu)
     {
-        return $menu->items()->with('menuable')->get()->toTree();
+        return $menu
+            ->items()
+            ->defaultOrder()
+            ->with('menuable')
+            ->get()
+            ->toTree();
     }
 
     public function render()
