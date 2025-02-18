@@ -28,7 +28,7 @@ trait Menuable
         if ($hasTranslations) {
             $locale = $locale ?? app()->getLocale();
             $query->whereRaw(
-                "LOWER(json_unquote(JSON_EXTRACT(`" . $this->getFilamentSearchLabel() . "`, '$.\"$locale\"'))) like LOWER(?)",
+                'LOWER(json_unquote(JSON_EXTRACT(`' . $this->getFilamentSearchLabel() . "`, '$.\"$locale\"'))) like LOWER(?)",
                 ["%{$search}%"]
             );
         } else {
@@ -37,7 +37,6 @@ trait Menuable
 
         $query->limit(10);
     }
-
 
     public function getFilamentSearchOptionName()
     {
