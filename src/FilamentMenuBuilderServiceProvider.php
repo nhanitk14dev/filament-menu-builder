@@ -161,6 +161,7 @@ class FilamentMenuBuilderServiceProvider extends PackageServiceProvider
         return [
             'create_menus_table',
             'create_menu_items_table',
+            'make_menus_slug_unique',
         ];
     }
 }
