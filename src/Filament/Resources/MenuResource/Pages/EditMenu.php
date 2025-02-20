@@ -17,6 +17,14 @@ class EditMenu extends EditRecord
             Actions\Action::make(__('filament-menu-builder::menu-builder.configure_menu'))
                 ->url(fn (Menu $record): string => MenuResource::getUrl('build', ['record' => $record]))
                 ->icon('heroicon-o-bars-3'),
+            Actions\Action::make(__('filament-menu-builder::menu-builder.regerate_slug'))
+                ->action(function (Menu $record) {
+                    $record->generateSlug();
+                    $record->save();
+                })
+                ->after(fn () => $this->fillForm())
+                ->requiresConfirmation()
+                ->icon('heroicon-o-arrow-path'),
             Actions\DeleteAction::make(),
         ];
     }

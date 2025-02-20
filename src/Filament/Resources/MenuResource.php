@@ -38,7 +38,14 @@ class MenuResource extends Resource
                     ->label(__('filament-menu-builder::menu-builder.form_labels.name'))
                     ->required()
                     ->autofocus()
-                    ->placeholder('Name')
+                    ->placeholder(__('filament-menu-builder::menu-builder.form_placeholders.name'))
+                    ->maxLength(255),
+                TextInput::make('slug')
+                    ->label(__('filament-menu-builder::menu-builder.form_labels.slug'))
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->placeholder(__('filament-menu-builder::menu-builder.form_placeholders.slug'))
+                    ->hidden(fn ($context) => $context === 'create')
                     ->maxLength(255),
             ]);
     }

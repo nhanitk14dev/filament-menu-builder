@@ -32,6 +32,7 @@ return [
 
     'form_labels' => [
         'name' => 'Ad',
+        'slug' => 'Slug',
         'target' => 'Hedef',
         'link_class' => 'Link Class',
         'wrapper_class' => 'Wrapper Class',
@@ -45,10 +46,16 @@ return [
         'parameters' => 'Parametreler',
     ],
 
+    'form_placeholders' => [
+        'name' => 'Ad',
+        'slug' => 'Slug',
+    ],
+
     'target' => [
         '_self' => 'Aynı Sekme',
         '_blank' => 'Yeni Sekme',
     ],
 
     'component_copy_message' => 'Blade Bileşeni Kopyalandı! Sadece blade dosyanıza yapıştırın!',
+    'regerate_slug' => 'Slug Yenile',
 ];

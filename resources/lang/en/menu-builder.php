@@ -31,6 +31,7 @@ return [
 
     'form_labels' => [
         'name' => 'Name',
+        'slug' => 'Slug',
         'target' => 'Target',
         'link_class' => 'Link Class',
         'wrapper_class' => 'Wrapper Class',
@@ -43,6 +44,10 @@ return [
         'use_menuable_name' => 'Use Menuable Name',
         'parameters' => 'Parameters',
     ],
+    'form_placeholders' => [
+        'name' => 'Name',
+        'slug' => 'Slug',
+    ],
 
     'create_menu_item' => 'Create Menu Item',
 
@@ -52,4 +57,5 @@ return [
     ],
 
     'component_copy_message' => 'Blade Component Copied! Just paste it in your blade file.',
+    'regerate_slug' => 'Regenerate Slug',
 ];
