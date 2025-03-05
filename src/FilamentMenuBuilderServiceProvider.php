@@ -113,7 +113,7 @@ class FilamentMenuBuilderServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('filament-menu-builder', __DIR__ . '/../resources/dist/components/filament-menu-builder.js'),
-            Css::make('filament-menu-builder', __DIR__ . '/../resources/dist/filament-menu-builder.css')->loadedOnRequest(),
+            Css::make('filament-menu-builder', __DIR__ . '/../resources/dist/filament-menu-builder.css'),
             Js::make('filament-menu-builder-scripts', __DIR__ . '/../resources/dist/filament-menu-builder.js'),
         ];
     }
