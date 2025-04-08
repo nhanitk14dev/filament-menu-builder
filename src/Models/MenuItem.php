@@ -34,6 +34,7 @@ class MenuItem extends Model
     use NodeTrait;
 
     protected $fillable = [
+        'id',
         'name',
         'target',
         'type',
