@@ -15,7 +15,7 @@ class Menu extends Component
         string $slug,
         public string $view = 'filament-menu-builder::components.plain.menu',
     ) {
-        $menu = \Biostate\FilamentMenuBuilder\Models\Menu::query()
+        $menu = config('filament-menu-builder.models.menu', \Biostate\FilamentMenuBuilder\Models\Menu::class)::query()
             ->where('slug', $slug)
             ->first();
 

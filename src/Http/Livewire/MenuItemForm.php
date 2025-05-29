@@ -49,7 +49,7 @@ class MenuItemForm extends Component implements HasForms
             'menu_id' => $this->menuId,
         ]);
 
-        $menuItem = MenuItem::query()->create($menuItem);
+        $menuItem = config('filament-menu-builder.models.MenuItem', MenuItem::class)::query()->create($menuItem);
 
         $this->form->fill();
 

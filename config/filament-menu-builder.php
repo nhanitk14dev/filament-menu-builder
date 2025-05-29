@@ -2,6 +2,8 @@
 
 return [
     'models' => [
+        'Menu' =>  \Biostate\FilamentMenuBuilder\Models\Menu::class,
+        'MenuItem' =>  \Biostate\FilamentMenuBuilder\Models\MenuItem::class,
         // 'Product' => 'App\\Models\\Product',
     ],
     'api_enabled' => true,

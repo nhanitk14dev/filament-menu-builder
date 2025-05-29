@@ -20,7 +20,7 @@ class Menu extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(MenuItem::class);
+        return $this->hasMany(config('filament-menu-builder.models.MenuItem', MenuItem::class));
     }
 
     /**

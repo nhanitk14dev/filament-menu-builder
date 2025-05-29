@@ -49,11 +49,11 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->action(function (array $arguments) {
                 $menuItemId = $arguments['menuItemId'];
 
-                $menuItem = MenuItem::find($menuItemId);
+                $menuItem = config('filament-menu-builder.models.MenuItem', MenuItem::class)::find($menuItemId);
                 if (! $menuItem) {
                     return;
                 }
-                MenuItem::descendantsOf($menuItem)->each(function (MenuItem $menuItem) {
+                config('filament-menu-builder.models.MenuItem', MenuItem::class)::descendantsOf($menuItem)->each(function (MenuItem $menuItem) {
                     $menuItem->delete();
                 });
 
@@ -71,7 +71,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->iconButton()
             ->fillForm(function (array $arguments) {
                 $menuItemId = $arguments['menuItemId'];
-                $menuItem = MenuItem::find($menuItemId);
+                $menuItem = config('filament-menu-builder.models.MenuItem', MenuItem::class)::find($menuItemId);
 
                 return $menuItem->toArray();
             })
@@ -82,7 +82,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
             ->action(function (array $arguments, $data) {
                 $menuItemId = $arguments['menuItemId'];
 
-                $menuItem = MenuItem::find($menuItemId);
+                $menuItem = config('filament-menu-builder.models.MenuItem', MenuItem::class)::find($menuItemId);
                 if (! $menuItem) {
                     return;
                 }
@@ -104,12 +104,12 @@ class MenuBuilder extends Component implements HasActions, HasForms
                     ->schema(MenuItemResource::getFormSchema()),
             ])
             ->action(function (array $arguments, $data) {
-                $parent = MenuItem::find($arguments['menuItemId']);
+                $parent = config('filament-menu-builder.models.MenuItem', MenuItem::class)::find($arguments['menuItemId']);
                 if (! $parent) {
                     return;
                 }
 
-                $menuItem = MenuItem::create([
+                $menuItem = config('filament-menu-builder.models.MenuItem', MenuItem::class)::create([
                     ...$data,
                     'menu_id' => $this->menuId,
                 ]);
@@ -148,7 +148,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
                 $menuItemId = $arguments['menuItemId'];
                 $isEdit = isset($arguments['edit']);
 
-                $menuItem = MenuItem::find($menuItemId);
+                $menuItem = config('filament-menu-builder.models.MenuItem', MenuItem::class)::find($menuItemId);
                 if (! $menuItem) {
                     return;
                 }
@@ -179,7 +179,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
 
     public function items(): Collection
     {
-        return MenuItem::where('menu_id', $this->menuId)
+        return config('filament-menu-builder.models.MenuItem', MenuItem::class)::where('menu_id', $this->menuId)
             ->with('menuable')
             ->defaultOrder()
             ->get()
@@ -192,7 +192,7 @@ class MenuBuilder extends Component implements HasActions, HasForms
             return;
         }
 
-        MenuItem::rebuildTree($this->data);
+        config('filament-menu-builder.models.MenuItem', MenuItem::class)::rebuildTree($this->data);
 
         Notification::make()
             ->title(__('filament-menu-builder::menu-builder.menu_saved'))
