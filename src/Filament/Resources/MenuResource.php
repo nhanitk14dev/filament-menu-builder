@@ -3,6 +3,7 @@
 namespace Biostate\FilamentMenuBuilder\Filament\Resources;
 
 use Biostate\FilamentMenuBuilder\Models\Menu;
+use Biostate\FilamentMenuBuilder\Models\MenuItem;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -11,7 +12,10 @@ use Filament\Tables\Table;
 
 class MenuResource extends Resource
 {
-    protected static ?string $model = Menu::class;
+    public static function getModel(): string
+    {
+        return config('filament-menu-builder.models.Menu', Menu::class);
+    }
 
     protected static ?string $navigationIcon = 'heroicon-o-bars-3';
 

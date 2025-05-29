@@ -67,7 +67,7 @@ class MenuItem extends Model
 
     public function menu(): BelongsTo
     {
-        return $this->belongsTo(Menu::class);
+        return $this->belongsTo(config('filament-menu-builder.models.Menu', Menu::class));
     }
 
     public function getMenuNameAttribute($value): string

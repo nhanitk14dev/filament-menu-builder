@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 class MenuItemResource extends Resource
 {
-    protected static ?string $model = MenuItem::class;
+    public static function getModel(): string
+    {
+        return config('filament-menu-builder.models.MenuItem', MenuItem::class);
+    }
 
     protected static ?string $navigationIcon = 'heroicon-o-bars-3';
 
