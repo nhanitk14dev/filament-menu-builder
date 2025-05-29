@@ -1,6 +1,6 @@
 {
-    "name": "biostate/filament-menu-builder",
-    "description": "An Elegant Menu Builder for FilamentPHP",
+    "name": "nhanitk14dev/filament-menu-builder",
+    "description": "Forked Menu Builder for FilamentPHP – Adds support Models configuration",
     "keywords": [
         "Biostate",
         "laravel",
